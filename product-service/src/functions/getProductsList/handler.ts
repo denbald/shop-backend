@@ -6,8 +6,10 @@ import { default as PRODUCTS_MOCK } from '../../mocks/products.json'
 import schema from './schema';
 
 const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+  const products = await Promise.resolve(PRODUCTS_MOCK);
+
   return formatJSONResponse({
-    products: PRODUCTS_MOCK,
+    products,
     event,
   });
 };

@@ -6,8 +6,10 @@ import { default as PRODUCTS_MOCK } from '../../mocks/products.json'
 import schema from './schema';
 
 const getProductsById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+  const product = await PRODUCTS_MOCK.find(product => product.id === event.pathParameters.productId)
+
   return formatJSONResponse({
-    product: PRODUCTS_MOCK.find(product => product.id === event.pathParameters.productId),
+    product,
     event,
   });
 };
