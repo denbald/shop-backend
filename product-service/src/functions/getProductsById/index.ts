@@ -8,6 +8,16 @@ export default {
         method: 'get',
         path: 'products/{productId}',
         cors: true,
+        responses: {
+          200: {
+            description: 'Individual Product',
+            bodyType: 'Product',
+          },
+          404: {
+            description: 'Product Not Found Error',
+            bodyType: 'ErrorResponse',
+          }
+        }
       },
     },
   ],
