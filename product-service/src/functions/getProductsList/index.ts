@@ -12,6 +12,10 @@ export default {
           200: {
             description: 'List of Products',
             bodyType: 'Products',
+          },
+          500: {
+            description: 'Internal Server Error',
+            bodyType: 'ErrorResponse',
           }
         }
       },

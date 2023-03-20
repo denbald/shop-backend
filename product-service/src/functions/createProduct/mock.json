@@ -1,0 +1,11 @@
+{
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "title": "Title Mock",
+    "description": "Description Mock",
+    "count": 10,
+    "price": 3
+  }
+}
