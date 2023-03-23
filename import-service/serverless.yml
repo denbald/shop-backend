@@ -1,0 +1,47 @@
+service: import-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: 'eu-central-1'
+  environment:
+    BUCKET_NAME: 'shop-import'
+    BUCKET_REGION: 'eu-central-1'
+    UPLOADED_FOLDER: 'uploaded'
+    PARSED_FOLDER: 'parsed'
+
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "s3:PutObject"
+            - "s3:GetObject"
+            - "s3:GetBucketLocation"
+            - "s3:ListBucket"
+            - "s3:DeleteObject"
+          Resource: arn:aws:s3:::shop-import/*
+
+functions:
+  importProductsFile:
+    handler: handler.importProductsFile
+    events:
+      - http:
+          path: /import
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                name: true
+  importFileParser:
+    handler: handler.importFileParser
+    events:
+      - s3:
+          bucket: shop-import
+          existing: true
+          event: s3:ObjectCreated:*
+          rules:
+              - prefix: uploaded/
+                suffix: .csv
